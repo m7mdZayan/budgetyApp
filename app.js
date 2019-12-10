@@ -26,18 +26,29 @@ let uiController = (function() {
 /*******************************************/
 // Global app controller
 let controller = (function(budgetCtrl, uiCtrl) {
-  let domStrings = uiCtrl.domStrings;
+  let setupEventListeners = function() {
+    let domStrings = uiCtrl.domStrings;
+
+    document
+      .querySelector(domStrings.inputButton)
+      .addEventListener("click", ctrlAddItem);
+
+    document.addEventListener("keypress", function(event) {
+      event.keyCode === 13 ? ctrlAddItem() : null;
+    });
+  };
 
   ctrlAddItem = function() {
     let input = uiCtrl.getData();
     console.log(input);
   };
 
-  document
-    .querySelector(domStrings.inputButton)
-    .addEventListener("click", ctrlAddItem);
-
-  document.addEventListener("keypress", function(event) {
-    event.keyCode === 13 ? ctrlAddItem() : null;
-  });
+  return {
+    init: function() {
+      console.log("starts now");
+      setupEventListeners();
+    }
+  };
 })(budgetController, uiController);
+
+controller.init();
