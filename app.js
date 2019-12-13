@@ -94,6 +94,17 @@ let uiController = (function() {
       document
         .querySelector(containerElement)
         .insertAdjacentHTML("beforeend", newHtml);
+    },
+    clearFields: function() {
+      let fieldsList, fieldsArr;
+
+      fieldsList = document.querySelectorAll("input");
+      fieldsArr = Array.prototype.slice.call(fieldsList);
+
+      fieldsArr.forEach(function(current, index, arr) {
+        current.value = "";
+      });
+      fieldsArr[0].focus();
     }
   };
 })();
@@ -126,6 +137,9 @@ let controller = (function(budgetCtrl, uiCtrl) {
     // 3/ add the item to the ui
     console.log(newItem);
     uiCtrl.addListItem(newItem, input.type);
+
+    // 4/ clear the fields
+    uiCtrl.clearFields();
   };
 
   return {
